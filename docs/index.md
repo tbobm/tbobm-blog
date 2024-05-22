@@ -4,7 +4,7 @@ Tech blog owned by [@tbobm][gh-tbobm]
 
 - Theo "Bob" Massard
 - Cloud Engineer
-- Likes to code
+- Likes to code in Python, golang and rust
 
 ## Content of this blog
 
