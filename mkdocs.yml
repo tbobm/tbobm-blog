@@ -1,0 +1,5 @@
+---
+site_name: tbobm
+theme:
+  name: simple-blog
+  locale: en
