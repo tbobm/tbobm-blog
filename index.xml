@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>tbobm</title>
+    <link>https://blog.tbobm.dev/</link>
+    <description>Recent content on tbobm</description>
+    <image>
+      <title>tbobm</title>
+      <url>https://blog.tbobm.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://blog.tbobm.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.119.0</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 06 Sep 2024 03:27:00 +0200</lastBuildDate>
+    <atom:link href="https://blog.tbobm.dev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tracking Row Level changes in PostgreSQL</title>
+      <link>https://blog.tbobm.dev/posts/row-level-database-tracking/</link>
+      <pubDate>Fri, 06 Sep 2024 03:27:00 +0200</pubDate>
+      <guid>https://blog.tbobm.dev/posts/row-level-database-tracking/</guid>
+      <description>Automatically Tracking Row-Level Changes in PostgreSQL Managing changes to database records is a crucial part of maintaining data integrity and transparency in a system. PostgreSQL exposes features that allow developers to automatically track changes at the row level, ensuring that every update is recorded with both a timestamp and an identifier of the application making the change.
+In this post, I&amp;rsquo;ll walk you through a method to implement automatic tracking of these changes using PostgreSQL triggers and functions.</description>
+    </item>
+    <item>
+      <title>Now</title>
+      <link>https://blog.tbobm.dev/posts/now/</link>
+      <pubDate>Tue, 20 Aug 2024 13:27:08 +0200</pubDate>
+      <guid>https://blog.tbobm.dev/posts/now/</guid>
+      <description>Current topics I work on and main interests.
+Cloud Kubernetes
+Maintaining old clusters Supporting engineers in improving Kubernetes cluster ownership AWS
+Develop serverless components Creating golang based cloud services Sharing knowledge Writing a Python Training path Getting better at public speaking </description>
+    </item>
+  </channel>
+</rss>
