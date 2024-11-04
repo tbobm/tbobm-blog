@@ -1,6 +1,6 @@
 +++
 title = 'Tracking Row Level changes in PostgreSQL'
-date = 2024-09-06T03:27:00+02:00
+date = 2024-11-04T17:17:00+02:00
 ShowToc = true
 +++
 
