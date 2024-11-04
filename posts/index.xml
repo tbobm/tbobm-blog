@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Posts on tbobm</title>
+    <title>Posts on tbobm.dev</title>
     <link>https://blog.tbobm.dev/posts/</link>
-    <description>Recent content in Posts on tbobm</description>
+    <description>Recent content in Posts on tbobm.dev</description>
     <image>
-      <title>tbobm</title>
+      <title>tbobm.dev</title>
       <url>https://blog.tbobm.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://blog.tbobm.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- 0.119.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Sep 2024 03:27:00 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 04 Nov 2024 17:17:00 +0200</lastBuildDate>
     <atom:link href="https://blog.tbobm.dev/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tracking Row Level changes in PostgreSQL</title>
       <link>https://blog.tbobm.dev/posts/row-level-database-tracking/</link>
-      <pubDate>Fri, 06 Sep 2024 03:27:00 +0200</pubDate>
+      <pubDate>Mon, 04 Nov 2024 17:17:00 +0200</pubDate>
       <guid>https://blog.tbobm.dev/posts/row-level-database-tracking/</guid>
-      <description>Automatically Tracking Row-Level Changes in PostgreSQL Managing changes to database records is a crucial part of maintaining data integrity and transparency in a system. PostgreSQL exposes features that allow developers to automatically track changes at the row level, ensuring that every update is recorded with both a timestamp and an identifier of the application making the change.
-In this post, I&amp;rsquo;ll walk you through a method to implement automatic tracking of these changes using PostgreSQL triggers and functions.</description>
+      <description>Ownerships and modification dates often have a huge role in troubleshooting or understanding how applications work. Making last change metadata available can be a game changer in case of bug hunting or to understand how data behaves without digging through logs for hours.
+Let&amp;rsquo;s dive in a way of automating this &amp;ldquo;last update&amp;rdquo; tracking at the row level in Postgresql.
+Code is available at github.com/tbobm/postgresql-row-level-changes
+Automatically Tracking Row-Level Changes in PostgreSQL Managing changes to database records is a crucial part of maintaining data integrity and transparency in a system.</description>
     </item>
     <item>
       <title>Now</title>
