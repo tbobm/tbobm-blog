@@ -1,6 +1,7 @@
+---
 baseURL: https://blog.tbobm.dev
 languageCode: en-us
-title: tbobm
+title: tbobm.dev
 theme: ["PaperMod"]
 
 enableRobotsTXT: true
@@ -16,7 +17,7 @@ minify:
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
-  title: tbobm
+  title: tbobm.dev
   description: "Personal technical blog"
   keywords: [Blog, Portfolio, PaperMod]
   author: 'Theo "Bob" Massard'
@@ -73,7 +74,8 @@ params:
   # home-info mode
   homeInfoParams:
     Title: "Hi there \U0001F44B"
-    Content: Welcome to my blog
+    Content: |
+      From containers to cloud architecture, I like beautiful and simple things
 
   socialIcons:
     - name: github
@@ -119,10 +121,6 @@ menu:
       name: tags
       url: /tags/
       weight: 20
-    - identifier: example
-      name: example.org
-      url: https://example.org
-      weight: 30
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
 markup:
