@@ -1,8 +1,0 @@
----
-site_name: tbobm
-site_url: https://blog.tbobm.dev
-site_description: Personal technical blog
-site_author: Theo "Bob" Massard
-theme:
-  name: simple-blog
-  locale: en
