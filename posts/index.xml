@@ -29,9 +29,9 @@ Automatically Tracking Row-Level Changes in PostgreSQL Managing changes to datab
       <pubDate>Tue, 20 Aug 2024 13:27:08 +0200</pubDate>
       <guid>https://blog.tbobm.dev/posts/now/</guid>
       <description>Current topics I work on and main interests.
-Cloud Kubernetes
-Maintaining old clusters Supporting engineers in improving Kubernetes cluster ownership AWS
-Develop serverless components Creating golang based cloud services Sharing knowledge Writing a Python Training path Getting better at public speaking </description>
+I love to post stuff on Github and a lot of my stuff is public: github.com/tbobm
+TLDR I like to work with highly scalable, efficient and reliable architectures (ideally by building them). Most of my recent experiences have been focused on Media Processing, offering a nice sandbox to try out Event Driven architectures.
+Coding is now a great part of my day to day life, with a strong intention to write self maintainable code, easy to ready and most importantly, simple things that just work.</description>
     </item>
   </channel>
 </rss>
