@@ -2,7 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://blog.tbobm.dev/tags/database/</loc>
+    <lastmod>2024-11-04T17:17:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/monitoring/</loc>
+    <lastmod>2024-11-04T17:17:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/postgresql/</loc>
+    <lastmod>2024-11-04T17:17:00+02:00</lastmod>
+  </url><url>
     <loc>https://blog.tbobm.dev/posts/</loc>
+    <lastmod>2024-11-04T17:17:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/</loc>
     <lastmod>2024-11-04T17:17:00+02:00</lastmod>
   </url><url>
     <loc>https://blog.tbobm.dev/</loc>
@@ -15,7 +27,5 @@
     <lastmod>2024-08-20T13:27:08+02:00</lastmod>
   </url><url>
     <loc>https://blog.tbobm.dev/categories/</loc>
-  </url><url>
-    <loc>https://blog.tbobm.dev/tags/</loc>
   </url>
 </urlset>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>postgresql on tbobm.dev</title>
+    <link>https://blog.tbobm.dev/tags/postgresql/</link>
+    <description>Recent content in postgresql on tbobm.dev</description>
+    <image>
+      <title>tbobm.dev</title>
+      <url>https://blog.tbobm.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://blog.tbobm.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.119.0</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Nov 2024 17:17:00 +0200</lastBuildDate>
+    <atom:link href="https://blog.tbobm.dev/tags/postgresql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tracking Row Level changes in PostgreSQL</title>
+      <link>https://blog.tbobm.dev/posts/row-level-database-tracking/</link>
+      <pubDate>Mon, 04 Nov 2024 17:17:00 +0200</pubDate>
+      <guid>https://blog.tbobm.dev/posts/row-level-database-tracking/</guid>
+      <description>Ownerships and modification dates often have a huge role in troubleshooting or understanding how applications work. Making last change metadata available can be a game changer in case of bug hunting or to understand how data behaves without digging through logs for hours.
+Let&amp;rsquo;s dive in a way of automating this &amp;ldquo;last update&amp;rdquo; tracking at the row level in Postgresql.
+Code is available at github.com/tbobm/postgresql-row-level-changes
+Automatically Tracking Row-Level Changes in PostgreSQL Managing changes to database records is a crucial part of maintaining data integrity and transparency in a system.</description>
+    </item>
+  </channel>
+</rss>
