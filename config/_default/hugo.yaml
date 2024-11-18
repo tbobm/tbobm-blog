@@ -1,22 +1,20 @@
 ---
-baseURL: https://blog.tbobm.dev
+baseURL: http://localhost
 languageCode: en-us
-title: tbobm.dev
+title: tbobm.dev | Local
 theme: ["PaperMod"]
 
 enableRobotsTXT: true
-buildDrafts: false
-buildFuture: false
-buildExpired: false
-
-googleAnalytics: G-TH8WFGGJBS
+buildDrafts: true
+buildFuture: true
+buildExpired: true
 
 minify:
   disableXML: true
   minifyOutput: true
 
 params:
-  env: production # to enable google analytics, opengraph, twitter-cards and schema.
+  env: development
   title: tbobm.dev
   description: "Personal technical blog"
   keywords: [Blog, Portfolio, PaperMod]
@@ -82,6 +80,8 @@ params:
       url: "https://github.com/tbobm"
     - name: linkedin
       url: "https://linkedin.com/in/tbobm"
+    - name: medium
+      url: "https://medium.com/@tbobm"
     - name: stackoverflow
       url: "https://stackoverflow.com/users/5810495/tbobm"
 
