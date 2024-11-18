@@ -2,6 +2,7 @@
 title = 'Tracking Row Level changes in PostgreSQL'
 date = 2024-11-04T17:17:00+02:00
 ShowToc = true
+tags = ['postgresql', 'database', 'monitoring']
 +++
 
 Ownerships and modification dates often have a huge role in troubleshooting or understanding
