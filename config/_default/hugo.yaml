@@ -13,11 +13,13 @@ minify:
   disableXML: true
   minifyOutput: true
 
+enableEmoji: true
+
 params:
   env: development
   title: tbobm.dev
   description: "Personal technical blog"
-  keywords: [Blog, Portfolio, PaperMod]
+  keywords: [Blog, Cloud, Code, Python]
   author: 'Theo "Bob" Massard'
   images: ["<link or path of image for opengraph, twitter-cards>"]
   DateFormat: "January 2, 2006"
@@ -32,6 +34,7 @@ params:
   ShowWordCount: true
   ShowRssButtonInSectionTermList: false
   UseHugoToc: true
+
   disableSpecial1stPost: false
   disableScrollToTop: false
   comments: false
