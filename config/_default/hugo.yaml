@@ -118,7 +118,7 @@ menu:
   main:
     - identifier: now
       name: now
-      url: /posts/now/
+      url: /now/
       weight: 10
     - identifier: tags
       name: tags
