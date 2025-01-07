@@ -116,6 +116,10 @@ params:
 
 menu:
   main:
+    - identifier: about
+      name: about
+      url: /about/
+      weight: 10
     - identifier: now
       name: now
       url: /now/
