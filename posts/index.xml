@@ -23,15 +23,5 @@ Let&amp;rsquo;s dive in a way of automating this &amp;ldquo;last update&amp;rdqu
 Code is available at github.com/tbobm/postgresql-row-level-changes
 Automatically Tracking Row-Level Changes in PostgreSQL Managing changes to database records is a crucial part of maintaining data integrity and transparency in a system.</description>
     </item>
-    <item>
-      <title>Now</title>
-      <link>https://blog.tbobm.dev/posts/now/</link>
-      <pubDate>Tue, 20 Aug 2024 13:27:08 +0200</pubDate>
-      <guid>https://blog.tbobm.dev/posts/now/</guid>
-      <description>Current topics I work on and main interests.
-I love to post stuff on Github and a lot of my stuff is public: github.com/tbobm
-TLDR I like to work with highly scalable, efficient and reliable architectures (ideally by building them). Most of my recent experiences have been focused on Media Processing, offering a nice sandbox to try out Event Driven architectures.
-Coding is now a great part of my day to day life, with a strong intention to write self maintainable code, easy to ready and most importantly, simple things that just work.</description>
-    </item>
   </channel>
 </rss>
