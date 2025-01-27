@@ -2,6 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://blog.tbobm.dev/tags/go/</loc>
+    <lastmod>2024-11-13T13:35:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/media-processing/</loc>
+    <lastmod>2024-11-13T13:35:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/performance/</loc>
+    <lastmod>2024-11-13T13:35:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/posts/</loc>
+    <lastmod>2024-11-13T13:35:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/python/</loc>
+    <lastmod>2024-11-13T13:35:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/</loc>
+    <lastmod>2024-11-13T13:35:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/</loc>
+    <lastmod>2024-11-13T13:35:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/tech/</loc>
+    <lastmod>2024-11-13T13:35:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/posts/watermarking-pictures-fast/</loc>
+    <lastmod>2024-11-13T13:35:00+02:00</lastmod>
+  </url><url>
     <loc>https://blog.tbobm.dev/tags/database/</loc>
     <lastmod>2024-11-04T17:17:00+02:00</lastmod>
   </url><url>
@@ -9,15 +36,6 @@
     <lastmod>2024-11-04T17:17:00+02:00</lastmod>
   </url><url>
     <loc>https://blog.tbobm.dev/tags/postgresql/</loc>
-    <lastmod>2024-11-04T17:17:00+02:00</lastmod>
-  </url><url>
-    <loc>https://blog.tbobm.dev/posts/</loc>
-    <lastmod>2024-11-04T17:17:00+02:00</lastmod>
-  </url><url>
-    <loc>https://blog.tbobm.dev/tags/</loc>
-    <lastmod>2024-11-04T17:17:00+02:00</lastmod>
-  </url><url>
-    <loc>https://blog.tbobm.dev/</loc>
     <lastmod>2024-11-04T17:17:00+02:00</lastmod>
   </url><url>
     <loc>https://blog.tbobm.dev/posts/row-level-database-tracking/</loc>

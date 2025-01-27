@@ -11,8 +11,43 @@
     </image>
     <generator>Hugo -- 0.119.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 Nov 2024 17:17:00 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 13 Nov 2024 13:35:00 +0200</lastBuildDate>
     <atom:link href="https://blog.tbobm.dev/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>go</title>
+      <link>https://blog.tbobm.dev/tags/go/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://blog.tbobm.dev/tags/go/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>media processing</title>
+      <link>https://blog.tbobm.dev/tags/media-processing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://blog.tbobm.dev/tags/media-processing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>performance</title>
+      <link>https://blog.tbobm.dev/tags/performance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://blog.tbobm.dev/tags/performance/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>python</title>
+      <link>https://blog.tbobm.dev/tags/python/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://blog.tbobm.dev/tags/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>tech</title>
+      <link>https://blog.tbobm.dev/tags/tech/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://blog.tbobm.dev/tags/tech/</guid>
+      <description></description>
+    </item>
     <item>
       <title>database</title>
       <link>https://blog.tbobm.dev/tags/database/</link>
