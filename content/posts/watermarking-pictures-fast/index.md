@@ -1,5 +1,5 @@
 +++
-title = 'Watermarking pictures using Pillow and Libvips'
+title = 'Watermarking pictures (fast) using Pillow and Libvips'
 date = 2024-11-13T13:35:00+02:00
 ShowToc = true
 tags = ['media processing', 'performance', 'python', 'go', 'tech']
@@ -26,7 +26,7 @@ more specifically, PNG overlays on JPEG files.
 [filigrane]: https://filigrane.beta.gouv.fr/
 
 The main goal is to be able to just "apply" our overlay to the base image. I've been dealing with
-this setup in Python for a while and always ended up using [Pillow][pillow] but [LibVips][libvips] has also
+this setup in Python for a while and always ended up using [Pillow][pillow-home] but [LibVips][libvips-home] has also
 been around for quite a while and piqued my interest a couple months ago.
 
 Time went on and I finally drafted a short minimal working setup to compare those two libraries.
@@ -36,9 +36,12 @@ Time went on and I finally drafted a short minimal working setup to compare thos
 We will be using a simple JPEG file (1920x1080) as the base image and a small PNG overlay to explore
 the different implementations.
 
+_source: image of a heart shaped post-it_
 ![source jpg image](./source.jpg)
 
-![overlay png with bob the builder](./overlay.png)
+_overlay: black and white PNG of Bob the Builder._
+![overlay png with bob the builder](./overlay.png#center)
+
 
 ### Python + Pillow
 
@@ -60,7 +63,16 @@ source.paste(overlay, (position_x, position_y), overlay)
 source.save(RESULT_IMAGE)
 ```
 
-Let's see how this snippet behaves when run using [`hyperfine`] [hyperfine-gh]:
+We can run this code to generate our expected artifact, Bob the builder on the heart.
+```console
+$ poetry run python3 example_pillow/main.py
+$ feh watermarked.png
+```
+
+![watermarked image](./watermarked.png)
+We now have our expected output.
+
+Let's see how this snippet behaves when run using [`hyperfine`][hyperfine-gh]:
 
 ```console
 $ hyperfine 'poetry run python3 example_pillow/main.py'
@@ -182,6 +194,33 @@ Go-based implementation. No surprise here, the whole program is going
 faster than both end to end Python implementation and the language overhead
 is slimmer than when using PyVips.
 
+```go
+// Load source and overlay images
+source, err := vips.NewImageFromFile(SOURCE_IMAGE)
+if err != nil {
+	log.Fatalf("Failed to load source image: %v", err)
+}
+defer source.Close()
+
+overlay, err := vips.NewImageFromFile(OVERLAY_IMAGE)
+if err != nil {
+	log.Fatalf("Failed to load overlay image: %v", err)
+}
+defer overlay.Close()
+
+// Resize overlay if necessary (optional)
+overlayWidth := overlay.Width()
+overlayHeight := overlay.Height()
+
+// Calculate position to center overlay on source
+x := (source.Width() - overlayWidth) / 2
+y := (source.Height() - overlayHeight) / 2
+
+// Composite overlay onto the source image with transparency
+err = source.Composite(overlay, vips.BlendModeOver, x, y)
+```
+
+We can then build and execute the `watermark-vips` binary:
 ```console
 $ go build
 $ hyperfine  watermark-vips
@@ -201,10 +240,9 @@ It was quite fun to take the time to try out different patterns and to highlight
 There is no right or wrong regarding library choice as Pillow still has plenty of usages, especially due to how easy it is to include in a project due to its "completeness" whereas PyVips' plugin mechanism can sometimes include a "compile it yourself" step to support different file types.
 
 
-
-
 [hyperfine-gh]: https://github.com/sharkdp/hyperfine
 [libvips-home]: https://www.libvips.org/
+[pillow-home]: https://pillow.readthedocs.io/en/stable/
 [vips-bench]: https://github.com/libvips/libvips/wiki/Speed-and-memory-use
 [pyvips-gh]: https://github.com/libvips/pyvips
 [pyvips-composite2]: https://libvips.github.io/pyvips/vimage.html?highlight=composite#pyvips.Image.composite2
