@@ -5,9 +5,9 @@ ShowToc = true
 tags = ['media processing', 'performance', 'python', 'go', 'tech']
 +++
 
-Working in the Media Processing industry, I very often encounter 2 concept: **adding overlay to images** and **doing it fast**.
+Working in the _media processing_ industry, I very often encounter 2 concepts: **adding overlay to images** and **doing it fast**.
 
-As I'm very much interested in tackling this problem well enough and using proper tooling for performance effiency, I explored several options that allows watermarking pictures.
+As I'm very much interested in tackling this problem well enough and using proper tooling for performance efficiency, I explored several options that allow watermarking pictures.
 
 > Code is available at [github.com/tbobm/watermarking-images-for-fun-and-profit][gh-repo]
 
@@ -15,19 +15,19 @@ As I'm very much interested in tackling this problem well enough and using prope
 
 ## Watermarking pictures
 
-To put things back context, watermarking is the act of applying an **overlay** to a **media**.
-This can be performed through many different operation and is used to apply branding, explicit ownership, or to *scope usage to a specific audience* [^1].
+To put things back in context, watermarking is the act of applying an **overlay** to a **media**.
+This can be performed through many different operation and is used to apply branding, establish ownership, or *limit usage to a specific audience* [^1].
 
-[^1]: France developped government [filigrane.beta.gouv.fr][filigrane], which can be used to mitigate fraud and scams
+[^1]: The French Government developed [filigrane.beta.gouv.fr][filigrane], which can be used to mitigate fraud and scams
 
-Watermarking can be applied to many different type of data but we'll narrow down to **images** and 
-more specifically, PNG overlays on JPG.
+Watermarking can be applied to many different types of data but we'll focus on **images** and 
+more specifically, PNG overlays on JPEG files.
 
 [filigrane]: https://filigrane.beta.gouv.fr/
 
-The main goal is to be able to just "apply" our overlay to the base image. I've been dealing this
-with setup in Python for a while and always ended up using [Pillow][pillow] but [libvips][libvips] has also
-been around for quite a while and peaked my interest a couple months ago.
+The main goal is to be able to just "apply" our overlay to the base image. I've been dealing with
+this setup in Python for a while and always ended up using [Pillow][pillow] but [LibVips][libvips] has also
+been around for quite a while and piqued my interest a couple months ago.
 
 Time went on and I finally drafted a short minimal working setup to compare those two libraries.
 
@@ -42,7 +42,7 @@ the different implementations.
 
 ### Python + Pillow
 
-My historical go-to library for interacting with images has always been "Good Old Pil[low]"
+My historical go-to library for interacting with images has always been "Good Old Pillow"
 which has been around for quite some time now.
 
 The API is quite straight-forward and we can rely on [`Image.paste`][pillow-paste] to apply the overlay
@@ -74,14 +74,14 @@ Let's keep this number in mind for later.
 
 ### Python + Libvips
 
-Another candidate that I've been looking at for quite a while has been [libvips][libvips-home],
+Another candidate that I've been looking at for quite a while has been [LibVips][libvips-home],
 _a demand-driven, horizontally threaded image processing library_. The [benchmarks][vips-bench] listed
 in their documentation are really interesting and I was eager to experiment with it.
 
 Knowing that it has Python bindings, we can duplicate and adapt our initial Pillow script
 to use [PyVips][pyvips-gh].
 
-The watermarking operation is performed using a [pyvips.Image.composite2][pyvips-composite2] operation.
+The watermarking operation is performed using a [`pyvips.Image.composite2`][pyvips-composite2] method.
 
 ```python
 source = pyvips.Image.new_from_file(SOURCE_IMAGE)
@@ -103,10 +103,10 @@ Benchmark 1: poetry run python3 example_pyvips/main.py
   Range (min … max):    1.277 s …  1.425 s    10 runs
 ```
 
-_1.33s ? Odd._ Expecting the library to be blazing fast, let's keep this number in mind too.
+_1.33s? Odd._ Expecting the library to be blazing fast, let's keep this number in mind too.
 Everything will make sense in a very short moment.
 
-### Dive in the results
+### Dive into the results
 
 By looking at **script execution** instead of **operation duration**, we also have unrelated processing
 taking up some part of the duration. We have, for instance:
@@ -118,24 +118,24 @@ Something that we often don't see, especially when working on relatively small p
 impact of the whole execution performed under-the-hood of some modules we used. Some projects, when imported,
 will perform a set of actions such as bootstrapping dependencies, logging, ...
 
-A few years ago the Instagram Engineering team wrote about the
-concept of [Strict Modules][ig-blog-strict] that would guarantee the **absence of side effects**.
+A few years ago, the Instagram Engineering team wrote about the
+concept of [strict modules][ig-blog-strict] that would guarantee the **absence of side effects**.
 The concept in itself is great and can offer a lot of improvements, both for development and production
 workloads.
 
 By checking the duration of both import statements, we can already have a hint:
-- `import pillow`: **00.069217s**
-- `import pyvips`: **00.172800s**
+- `import pillow`: **0.069217s**
+- `import pyvips`: **0.172800s**
 
 Naturally, I ended up diving a bit in both project's (Pillow and PyVips) entrypoints and 
 without any surprise, we can observe that PyVips' entrypoint
 ([`__init__.py`][pyvips-init]) is loading the LibVips bindings, configuring logging, ... which can add up.
 
-Considering that those values are not relevant for an actual long lived service
+Considering that those values are not relevant for an actual long-lived service
 (i.e.: ECS Service) or an execution with a Warmed up environment (i.e.: Lambdas), we
 can safely dismiss those durations that correspond to "cold starts".
 
-If instead of observing the end to end processing, we only observe the actual
+If instead of observing the end-to-end processing, we only observe the actual
 **watermarking operation** by extracting this specific code snippet
 from our example code, we can have a much more accurate representation of a
 realistic calculation.
@@ -161,7 +161,7 @@ print(res)
 
 We end up with the following summary table:
 
-| Library | 100 000 watermarks | Import module | Single run duration |
+| Library | 100.000 watermarks | Import module | Single run duration |
 |---------|--------------------|---------------|--------------|
 | Pillow  |             73.80s |    00.046741s |        1.10s |
 | PyVips  |              8.09s |    00.174187s |        1.33s |
@@ -169,7 +169,7 @@ We end up with the following summary table:
 As we can see, the tiny overhead that we initially observed
 with the single end to end script run timing is more than justified
 on PyVips' end.
-By being nearly x10 faster to perform the same number operation, it's easy to
+By being nearly 10x faster to perform the same number operation, it's easy to
 visualize the performance gains from using PyVips.
 
 However, as stated in their ["Notes"][pyvips-benchmark-notes] section,
@@ -178,7 +178,7 @@ LibVips is by default shining on multi-core systems, which is what I'm using.
 ### Bonus: Golang + Libvips
 
 As a bonus and for the sake of trying it out, I put together a simple
-Golang-based implementation. No surprise here, the whole program is going
+Go-based implementation. No surprise here, the whole program is going
 faster than both end to end Python implementation and the language overhead
 is slimmer than when using PyVips.
 
@@ -190,15 +190,15 @@ Benchmark 1: watermark-vips
   Range (min … max):   252.6 ms … 321.3 ms    10 runs
 ```
 
-Of course, this has much more implications as it's a whole different language, but it's
+Of course, this has much more implications as it's a completely different language, but it's
 still great to know how much of a difference switching to Go could make in a specialized
 micro-service approach.
 
 ## Observations
 
-It was quite fun to take the time to try out different patterns and to highlight the performances differents (here, speed mostly) of both libraries I've been using for a while.
+It was quite fun to take the time to try out different patterns and to highlight the performance differences (here, speed mostly) of both libraries I've been using for a while.
 
-There is no right or wrong regarding Library choice as Pillow still has plenty of usages, especially due to how easy it is to include in a project due to its "completeness" whereas PyVips' plugin mechanism can sometimes include a "compile it yourself" step to support different file types.
+There is no right or wrong regarding library choice as Pillow still has plenty of usages, especially due to how easy it is to include in a project due to its "completeness" whereas PyVips' plugin mechanism can sometimes include a "compile it yourself" step to support different file types.
 
 
 
