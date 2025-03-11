@@ -11,8 +11,17 @@
     </image>
     <generator>Hugo -- 0.119.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 Nov 2024 13:35:00 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 11 Mar 2025 11:30:20 +0200</lastBuildDate>
     <atom:link href="https://blog.tbobm.dev/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Complete health checks and why they matter</title>
+      <link>https://blog.tbobm.dev/posts/complete-health-checks/</link>
+      <pubDate>Tue, 11 Mar 2025 11:30:20 +0200</pubDate>
+      <guid>https://blog.tbobm.dev/posts/complete-health-checks/</guid>
+      <description>Standard health checks tell you if an app is running but not if it’s actually working. Complete Health Checks go deeper, verifying dependencies like databases and caches to catch issues early and keep deployments smooth.
+In this article, we’ll cover why they matter, how to set them up, and the key differences between liveness and readiness checks—so your services stay reliable and efficient in production.
+What are health checks and why are they so useful Having an application that performs some kind of processing is only the first part of the journey.</description>
+    </item>
     <item>
       <title>Watermarking pictures (fast) using Pillow and Libvips</title>
       <link>https://blog.tbobm.dev/posts/watermarking-pictures-fast/</link>

@@ -11,8 +11,29 @@
     </image>
     <generator>Hugo -- 0.119.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 Nov 2024 13:35:00 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 11 Mar 2025 11:30:20 +0200</lastBuildDate>
     <atom:link href="https://blog.tbobm.dev/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>optimization</title>
+      <link>https://blog.tbobm.dev/tags/optimization/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://blog.tbobm.dev/tags/optimization/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>reliability</title>
+      <link>https://blog.tbobm.dev/tags/reliability/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://blog.tbobm.dev/tags/reliability/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>tech</title>
+      <link>https://blog.tbobm.dev/tags/tech/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://blog.tbobm.dev/tags/tech/</guid>
+      <description></description>
+    </item>
     <item>
       <title>go</title>
       <link>https://blog.tbobm.dev/tags/go/</link>
@@ -39,13 +60,6 @@
       <link>https://blog.tbobm.dev/tags/python/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://blog.tbobm.dev/tags/python/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>tech</title>
-      <link>https://blog.tbobm.dev/tags/tech/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://blog.tbobm.dev/tags/tech/</guid>
       <description></description>
     </item>
     <item>
