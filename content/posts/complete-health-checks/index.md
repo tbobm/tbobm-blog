@@ -21,14 +21,22 @@ To address this need, we can introduce a utility feature that exposes the status
 At first, we can setup a health check like the one we often see in most APIs: `/health`.
 
 The `/health` route is expected to answer a 2XX status code and translates into the API saying:
-> I'm **live** and able to receive HTTP requests!
+> I'm **alive** and able to receive HTTP requests!
 
 Using a mock API, we can try this route using [`curl`][curl]:
-
 
 {{< highlight bash-session "linenos=false" >}}
 $ curl http://localhost/health
 {"message": "alive!"}
+{{< / highlight >}}
+
+We usually set those in many shape or forms but we'll stick to Python to match
+our example:
+
+{{< highlight python "linenos=table" >}}
+@app.route("/health")
+def health_check():
+    return {"message": "alive!"}
 {{< / highlight >}}
 
 However, being able to to receive HTTP requests is one thing, processing them successfully is another,
@@ -54,7 +62,7 @@ They aim to be an **additional source of information** that target deployments o
 we interact with and that we would want to test, such as Databases, Message Brokers, ....
 
 Not to be a replacement of standard availability health checks as they answer different question.
-Distributed systems where [East-west traffic][east-west-wiki] happen a lot are most suited for this
+Distributed systems where [east-west traffic][east-west-wiki] happen a lot are most suited for this
 as failure to answer perfectly, at scale, could impact the overall performances of the system.
 
 [east-west-wiki]: https://en.wikipedia.org/wiki/East-west_traffic
@@ -65,26 +73,33 @@ Complete Health Checks go beyond the simple [HTTP 200][http-200] response by act
 and functionality of key system dependencies. This deeper validation provides several advantages,
 especially in environments where reliability and efficiency are critical.
 
+In a microservice based architecture, they help preventing cascading outages and keep
+the retry capabilities for more complex situations.
+
 [http-200]: https://http.cat/status/200
 
 ### Integrate the Fail-Fast Concept in Deployments
 
 By proactively detecting failures before they impact users, Complete Health Checks help
-implement the fail-fast principle in new deployments. If a crucial dependency is
-unreachable, the deployment can be halted or flagged immediately, reducing the risk of degraded service.
+implement the [fail-fast principle][wiki-failfast] in new deployments. If a crucial dependency is
+unreachable, the deployment can be cancelled and rolled back immediately, reducing the risk of degraded service.
 
-- **Database Connectivity Issues**: If an application cannot connect to its database, it should fail
-early rather than attempt to serve requests with incomplete functionality.
+- **Database Connectivity Issues**: If an application can not connect to its database, it must fail
+as early as possible instead of attempting to serve requests that will fail anyway.
 - **External Service Availability**: Some applications rely on third-party APIs or internal services.
 A proper health check should validate access to these endpoints to ensure smooth operation.
 
 ### Guarantee Processing Efficiency During Deployments
 
-A system that is aware of its own health can make smarter decisions about request handling. Instead of blindly accepting traffic,
-it can gracefully reject requests if a key component is unavailable.
+A system that is aware of its own health can make smarter decisions about request handling.
+Instead of blindly accepting traffic,
+it can gracefully reject requests [^2] if a key component is unavailable.
+
+[^2]: This can be handled at the [service mesh][wiki-service-mesh] level if any
 
 - **Serve Only Valid Requests**: If the application detects missing dependencies, it can return an appropriate error status instead of inefficiently processing doomed requests.
-- **Optimize Resource Utilization**: Prevent wasted resources in production by ensuring that only healthy instances handle user traffic.
+- **Optimize Resource Utilization**: Prevent wasted resources in production by ensuring that only healthy instances handle user traffic. This goes a long way towards [green IT][wiki-green-it] and cost reduction for processing
+heavy requests.
 
 ### Expose More Than Just Basic Availability
 
@@ -92,7 +107,7 @@ Basic health checks only confirm whether an application is running, but Complete
 
 - **Instant Cache Status Visibility**: A well-implemented health check can report if cache layers (e.g., Redis, Memcached)
 are operational, helping diagnose performance bottlenecks.
-- **Granular System Insights**: Instead of a binary "up or down" status, a rich health check endpoint can return structured
+- **Granular System Insights**: Instead of a binary "up or down" status, a more granular health check endpoint can return structured
 data about application health, making it easier to debug issues before they escalate.
 
 ## How to set them up
@@ -112,6 +127,8 @@ third party calls.
 To properly implement a Complete Health Check, we need to ensure that
 we can reach both our Redis and our PostgreSQL dependencies.
 
+- Redis: performing a [`ping`][redis-ping] command.
+- PostgreSQL: executing a `SELECT 1;` statemant against our database.
 
 {{< highlight python "linenos=table" >}}
 def perform_full_healthcheck() -> bool:
@@ -126,9 +143,21 @@ def perform_full_healthcheck() -> bool:
     return True
 {{< /highlight >}}
 
+We can proceed to include our complete health check as another route in our application:
+
+{{< highlight python "linenos=table" >}}
+@app.route("/health-full")
+def perform_health_check():
+    try:
+        complete_check_successful = perform_full_healthcheck()
+        return {"message": "full health check works!"}
+    except Exception as err:  # something went wrong
+	# we have to return any non-2XX status code
+        return {"message": "full health check does not work"}, 500
+{{< / highlight >}}
+
 Most of the services only support a single strategy for health checks, meaning that for a
-given "health check" initiator (i.e.:  ),
-[AWS Application Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html)
+given "health check" initiator (i.e.: [AWS Application Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html)),
 which means that:
 1. we don't want to spam our database or cache instance
 2. once the "full setup" is done, we can switch to the default "serve requests" check
@@ -163,7 +192,7 @@ A **liveness check** determines whether the application process is alive and cap
 - Used by **load balancers**, **orchestrators** (ECS, Kubernetes), and **service meshes** to determine whether a container should continue running.  
 - If a liveness check fails, the container is typically restarted.  
 - Examples:  
-  - Responding with an HTTP 200 status from a `/healthz` endpoint.  
+  - Responding with an HTTP 200 status from a `/health` endpoint.  
   - Checking if the process is still running using a command like `pgrep my-service`.  
 
 **Readiness Checks: Ensuring the Application is Ready to Handle Traffic**  
@@ -183,21 +212,24 @@ A **Complete Health Check** is effectively a readiness check that goes beyond si
 - Ensures that misconfigured or partially initialized instances do not serve traffic.  
 
 **Implementation Examples (ECS, Kubernetes)**  
-Complete Health Checks can be integrated into common cloud environments like ECS and Kubernetes:  
+Complete Health Checks can be integrated into common cloud environments like ECS and Kubernetes.
+
+Here we consider the `/health` route to return the standard health check and the `/health-full`
+acts as the complete health check.
 
 **Kubernetes:**
 
 ```yaml
 livenessProbe:
   httpGet:
-    path: /healthz
+    path: /health
     port: 8080
   initialDelaySeconds: 3
   periodSeconds: 10
 
 readinessProbe:
   httpGet:
-    path: /readiness
+    path: /health-full
     port: 8080
   initialDelaySeconds: 10
   periodSeconds: 5
@@ -213,7 +245,7 @@ _Check the corresponding [Kubernetes documentation on Liveness, Readiness (and S
 "healthCheck": {
   "command": [
     "CMD-SHELL",
-    "curl -f http://localhost:8080/readiness || exit 1"
+    "curl -f http://localhost:8080/health-full || exit 1"
   ],
   "interval": 30,
   "timeout": 5,
@@ -229,19 +261,27 @@ work in ECS._
 
 **Combining Multiple Health Check Sources**:
 
-Complete Health Checks provide more granular health insights, making them valuable for multiple system components:  
+Complete Health Checks provide more granular health insights, making them valuable
+for multiple system components:  
 
 - **Load Balancer (ALB, NLB, API Gateway)**: Uses health checks to determine if an instance should receive traffic.  
 - **Container Orchestrator (Kubernetes, ECS)**: Uses readiness probes to decide when an instance is ready for service.  
 - **ECS Task-Level Health Check**: Ensures that only fully configured instances join the service.  
 
-By leveraging both **liveness** and **readiness** checks correctly, applications can achieve higher availability, prevent misconfigured deployments, and optimize request handling.  
+By leveraging both **liveness** and **readiness** checks correctly,
+applications can achieve higher availability, prevent misconfigured
+deployments, and optimize request handling.  
 
 ## Conclusion
 
-Implementing both liveness and readiness checks ensures that your application remains not just available, but fully operational and efficient. This approach helps catch misconfigurations early, optimizes resource usage, and prevents unnecessary downtime.
+Implementing both liveness and readiness checks ensures that your application
+remains not just available, but fully operational and efficient.
+This approach helps catch misconfigurations early, optimizes resource
+usage, and prevents unnecessary downtime.
 
-No matter the deployment platform [Kubernetes][k8s], [ECS][ecs], or anything that supports health checks integrating these checks strengthens reliability and predictability.
+No matter the deployment platform [Kubernetes][k8s], [ECS][ecs] or anything that
+supports health checks integrating these checks strengthens
+reliability and predictability.
 
 Want to see a minimal implementation? Check it out here: [complete-health-checks-design][health-check-repo]
 
@@ -266,3 +306,5 @@ Feel free to reach out if you have feedbacks or questions !
 [ecs]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html
 [ecs-health]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/healthcheck.html
 [k8s-probes]: https://kubernetes.io/docs/concepts/configuration/liveness-readiness-startup-probes/
+[wiki-service-mesh]: https://en.wikipedia.org/wiki/Service_mesh
+[wiki-green-it]: https://en.wikipedia.org/wiki/Green_computing
