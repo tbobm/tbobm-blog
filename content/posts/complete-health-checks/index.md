@@ -128,7 +128,7 @@ To properly implement a Complete Health Check, we need to ensure that
 we can reach both our Redis and our PostgreSQL dependencies.
 
 - Redis: performing a [`ping`][redis-ping] command.
-- PostgreSQL: executing a `SELECT 1;` statemant against our database.
+- PostgreSQL: executing a `SELECT 1;` statement against our database.
 
 {{< highlight python "linenos=table" >}}
 def perform_full_healthcheck() -> bool:
