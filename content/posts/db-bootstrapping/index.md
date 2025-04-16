@@ -12,44 +12,21 @@ Intro: databases are everywhere + I love Postgres, sad to miss the pgdays
 
 - [ ] Add catchy summary / teaser
 
-## Intro - tools involved
+## Intro
 
-- introduce tools
-  - simple postgres image with compose
-  - aws rds with terraform module
-- schema as code using atlasgo
-  - why yet another tool
-  - initial schema declaration
-  - adding migrations
-- stop using the masteruser (rbac: creating roles and users)
-  - migration user for non-local (create, alter, drop)
-  - application user (read, write)
-  - analytics user (read only)
-- maintaining our database
-  - migration with cicd deployment user using gha
-  - keeping it lean: neat patterns to reduce the bill (summarizing, crunching)
-  - ensuring we can recover: snapshots and DB dumps
+When working with databases, it’s easy to fall into the trap of “just winging it”—a
+quick container here, a few clicks in the AWS console there, and before
+you know it, you're running production off an unversioned schema with the master user.
 
+This article is a hands-on guide—and a collection of things I’ve grown to
+enjoy—when working with SQL databases in modern environments. It covers
+setting up Postgres both locally and in the cloud, adopting schema as
+code using Atlas, securing access with proper roles, and maintaining
+everything through GitHub Actions.
 
+The goal is to keep your database setup repeatable, reviewable, and resilient from day one.
 
-- simple postgres image with compose
-- aws rds with terraform module
-
-## Infra as code, Schema as code, everything as code
-
-### why yet another tool
-
-> Notes:
-> - Why I love atlasgo: 
-> - like alembic but with schema as code that can leverage HCL (shared format with other tools I use like terraform or packer) and without any direct language used
-> - declarative approach is a must have today
-> - easy to replicate, structure, review
-> - I personally don't like ClickOps
-> - lightweight and easy to use
-
-Bootstrapping SQL Databases for Local and Production Setup
-
-# Infra as Code, Schema as Code, Everything as Code
+## Infra as Code, Schema as Code, Everything as Code
 
 When working with databases, consistency and repeatability are key. Whether
 setting up a local development database or provisioning a production-ready environment,
@@ -59,7 +36,7 @@ maintainable setup.
 Let's explore why this approach matters and how tools
 like [AtlasGO][atlas-main] simplify schema management.
 
-## Why yet another tool?
+### Why yet another tool?
 
 There are plenty of database migration tools out there, like Alembic that I've used in the past
 but I love AtlasGO for a few reasons:
@@ -89,18 +66,8 @@ By adopting a declarative approach, we gain:
 
 **Scalability**: the same process can be used across local, staging, and production environments.
 
-In the next section, we’ll get hands-on with AtlasGO, defining an initial schema and managing database migrations efficiently.
-
-### embrace schema as code
-
-- initial schema declaration
-  - describe: you can either build it from scratch or by introspection on an existing database
-    - add snippet
-    - add minimal schema with 2 tables: papers (title, id) and mentions (ref to paper, id, document)
-  - hint: introspection is great way to switch from an ORM based database management
-- adding migrations
-  - simple example on how to add something to our table
-- additional: shout-out to chartdb.io for diagram viz (include todo to add viz picture)
+In the next section, we’ll get hands-on with AtlasGO, defining an initial schema
+and managing database migrations efficiently.
 
 ### Embrace schema as code
 
@@ -162,47 +129,7 @@ making it easier to understand relationships and structures.
 In the next section, we’ll discuss best practices for user roles
 and access control in SQL databases.
 
-## stop using the masteruser
-
-STARTDELETE
-_rbac: creating standard roles and users_
-
-only applies to non-local, apply to local when permissions need to be validated but I would not
-dive in it except if mandatory
-
-### why and how
-
-- using the masteruser is a huge security risk
-- applications can not be tracked properly
-- credential rotation is painful to propagate if no dynamic retrieval is possible
-
-when using users, we can leverage postgres capabilities by limiting max query duration, accesses
-and have a more useful overview of how our database is use (i.e.: RDS enhanced monitoring and
-postgres analytics can leverage multiple users)
-
-### default go-to roles
-
-- migration user for non-local (create, alter, drop) use to apply our migrations through CICD
-- application user (read, write) for our apps
-- analytics user (read only) for BI use, Data team, Product managers, ...
-
-only one migration user should be used per environment and it will be used by our cicd user
-
-### a step beyond: match applications with roles
-
-following our default setup, we can go a step further and allow _parts_ of our database
-to be used by some applications, in a "shared database" setup
-
-TODO: link to tracking db article (my other medium article which recommends automated updates
-based on the "?application" postgres query parameter)
-
-STOPDELETE
-
-Great! Here's your draft section on database roles and users, written in the style you prefer—clear, structured, and actionable for engineers and decision-makers.
-
----
-
-## Stop using the master user
+## Stop using the master user !
 
 _RBAC: Creating standard roles and users_
 
@@ -318,39 +245,101 @@ keeping privileges scoped and secure.
 
 NEXTARTICLE
 
-## maintaining our database
 
-_you're here for the RUN part too_
+## Maintaining our database
 
-### CICD deployment with github actions
+_You're here for the **run** part too._
 
-either synchronous or using ECS for private databases
+Setting up a schema and applying best practices around roles
+is great but it’s not enough. Your database needs to **evolve** safely,
+**scale** affordably, and be **recoverable** in a pinch.
 
-build image with latest revision, push to ECR, trigger one-off task, wait, good if success rollback
+This section walks through real-world practices that help you stay production-ready.
 
-consider waiter but inform can be costly on github actions
-https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ecs/wait/tasks-stopped.html
+### CI/CD Deployment with GitHub Actions
 
+Whether your database is public-facing or running inside a private subnet
+(like AWS RDS in a VPC), schema changes should be handled like any
+other part of your system: via CI/CD.
 
-- migration with cicd deployment user using gha
-  - merged changes lead to migration being applied
-  - enable "self served" database rollback with workflow dispatch
+A typical setup might look like:
 
+1. **Build a one-off migration container** using the latest application revision
+2. **Push it to ECR**
+3. **Trigger a one-off ECS task** to run the migration
+4. **Wait for success or rollback** automatically if something fails
 
-### keeping it lean: reduce the bill
-- keeping it lean: neat patterns to reduce the bill (summarizing, crunching)
-  - analytics and processing should be split
-  - ever-growing databases are not scalable, leads to wasted $
+You can even use GitHub Actions to orchestrate the ECS task execution and lifecycle.
 
-### ensuring we can recover: snapshots and DB dumps
+TODO: see example definition in gh repo
 
-- disaster recovery is important
-- useful to bootstrap non-production environments
-- snapshots vs database dumps: they should coexist IMHO
+#### Example: Wait for ECS Task to Finish
 
-mention replibyte? anonymization is cool too
+If using ECS, consider leveraging the AWS CLI "waiter" to monitor your task:
+
+```bash
+aws ecs wait tasks-stopped \
+  --cluster my-cluster \
+  --tasks <task-id>
+```
+
+> ⚠️ Heads-up: this can be expensive in GitHub Actions minutes—use it with caution or optimize with shorter polling and early exits.
+
+#### Good Practice
+
+- Migrations should be applied by the `migration_user` created earlier.
+- Use GitHub Actions triggers on `main` or `release` branches.
+- Add a **manual rollback** mechanism using `workflow_dispatch` to enable safe rollbacks without reverting code.
+
+### Keeping it lean: reducing the bill
+
+Databases often grow silently until one day your AWS bill screams louder than your SRE.
+
+**Some human friendly cost-saving patterns**:
+
+- **Separate analytics from OLTP**: Don't let your app compete with long-running queries for dashboard refreshes
+- **Summarize over time**: Replace large granular datasets with summary tables. For example, keep hourly event logs for a month, but store daily rollups after that
+- **Crunch data**: Convert high-volume event streams into metric tables like:
+
+```sql
+CREATE TABLE metrics (
+  event_type TEXT,
+  period DATE,
+  completed_count INT
+);
+```
+
+You still get insights, with a fraction of the storage cost.
+
+### Ensuring we can recover: snapshots & DB dumps
+
+No setup is complete without a solid backup strategy.
+
+- **Automated RDS snapshots**: Perfect for infrastructure-level recovery. Fast, point-in-time, but tied to AWS.
+- **Database dumps** (e.g., `pg_dump`): Ideal for portability, seeding test/staging environments, and archiving.
+- **Both** should coexist. Snapshots for fast infra restore, dumps for controlled imports and auditing.
+
+#### Bonus: Use realistic data safely
+
+Tools like [Replibyte](https://github.com/Qovery/Replibyte) let you:
+
+- Dump production-like data into staging/dev environments.
+- **Anonymize sensitive data** automatically.
+- Safely run integration or load tests without risking exposure.
+
+This improves test coverage while respecting privacy and compliance.
 
 ## Conclusion
+
+Bootstrapping and maintaining SQL databases doesn't have to be a mystery or a manual chore.
+By treating infrastructure and schema as code, defining clear roles, and integrating database
+changes into your CI/CD workflows, you build a system that is reproducible, secure, and scalable
+by design.
+
+This hands-on approach not only improves developer velocity but also strengthens
+operational resilience. Whether you're spinning up a new service locally,
+managing production-grade RDS instances or fine-tuning query access for analytics,
+these practices help you move fast without breaking your data.
 
 Feel free to reach out if you have feedbacks or questions !
 
