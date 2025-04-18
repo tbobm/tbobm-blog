@@ -349,7 +349,7 @@ manifests, automations, ...
 
 **Nice to have: wait for ECS Task to finish:**
 
-If using ECS, consider leveraging the AWS CLI "waiter" sub commands to monitor
+If using [ECS][ecs], consider leveraging the AWS CLI "waiter" sub commands to monitor
 your task:
 
 ```bash
