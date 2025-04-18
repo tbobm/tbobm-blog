@@ -6,23 +6,20 @@ tocopen = true
 tags = ['tech', 'database', 'rbac', 'postgres', 'migration']
 +++
 
-A hands-on guide and list of things I enjoy doing when working with databases.
-
-Intro: databases are everywhere + I love Postgres, sad to miss the pgdays
-
-- [ ] Add catchy summary / teaser
+A practical walkthrough of how I manage SQL databases across dev and
+prod - from local Docker setups to CI/CD-powered migrations in the cloud.
 
 ## Intro
 
-When working with databases, it’s easy to fall into the trap of “just winging it”—a
+When working with databases, it’s easy to fall into the trap of taking shortcuts — a
 quick container here, a few clicks in the AWS console there, and before
 you know it, you're running production off an unversioned schema with the master user.
 
 This article is a hands-on guide—and a collection of things I’ve grown to
-enjoy—when working with SQL databases in modern environments. It covers
-setting up Postgres both locally and in the cloud, adopting schema as
-code using Atlas, securing access with proper roles, and maintaining
-everything through GitHub Actions.
+enjoy when working with SQL databases in modern environments. It covers
+setting up [Postgres][postgresql-home] [^1] both locally and in the cloud, adopting schema as
+code using [Atlas][atlas-home], securing access with proper roles, and maintaining
+everything through [GitHub Actions][gh-actions].
 
 The goal is to keep your database setup repeatable, reviewable, and resilient from day one.
 
@@ -34,24 +31,22 @@ managing infrastructure and schema as code ensures a predictable and
 maintainable setup.
 
 Let's explore why this approach matters and how tools
-like [AtlasGO][atlas-main] simplify schema management.
+like [AtlasGO][atlas-home] simplify schema management.
 
 ### Why yet another tool?
 
 There are plenty of database migration tools out there, like Alembic that I've used in the past
 but I love AtlasGO for a few reasons:
 
-- **Schema as Code**: unlike imperative migration tools, [AtlasGO][atlas-main] takes a
+- **Schema as Code**: unlike imperative migration tools, [AtlasGO][atlas-gh] takes a
 declarative approach, allowing you to define your schema in a structured format.
 - **Leverages HCL**: it uses HashiCorp Configuration Language ([HCL][hcl-gh]), the same format used
 by (my dear) Terraform and Packer, making it easier to integrate with existing
 infrastructure as code workflows.
-- **No dependecy on a language dependency**: many tools require Python, Java,
+- **No dependecy on a language dependency**: many tools require Python [^2], Java,
 or SQL-based scripting. AtlasGO avoids this, keeping the setup lightweight and easy to use.
 - **Easy to replicate and review**: having a single source of truth for schema definitions
 makes collaboration, code reviews, and automation seamless.
-
-TODO: switch to a note or something ?
 
 **No ClickOps**: I strongly dislike manual UI-based configurations (aka [ClickOps][clickops-wiki]).
 They lead to inconsistencies and make infrastructure difficult to track and reproduce.
@@ -66,7 +61,7 @@ By adopting a declarative approach, we gain:
 
 **Scalability**: the same process can be used across local, staging, and production environments.
 
-In the next section, we’ll get hands-on with AtlasGO, defining an initial schema
+In the next section, we’ll get hands-on with [AtlasGO][atlas-main], defining an initial schema
 and managing database migrations efficiently.
 
 ### Embrace schema as code
@@ -79,32 +74,107 @@ When starting with schema as code, you can either:
 - Introspect an existing database to generate schema definitions automatically
 
 Introspection is particularly useful if you're transitioning from an ORM-managed
-database to a structured schema-as-code approach.
+database to a structured schema-as-code approach. This feature is highlighted in
+[Declarative Workflows - Schema inspection][atlas-inspect]
 
-Here’s an example of a minimal schema with two tables using AtlasGO:
+```console
+$ atlas schema inspect -u "postgres://user:pass@localhost:5432/database?search_path=public&sslmode=disable"
+```
+
+Here’s an example of a minimal schema with two tables using [AtlasGO][atlas-home]:
 
 ```hcl
-schema "public" {
-  table "papers" {
-    column "id" { type: int, primary_key: true }
-    column "title" { type: text }
+table "papers" {
+  schema = schema.public
+  column "id" {
+    type = serial
+  }
+  column "title" {
+    type = varchar(255)
+    null = false
+  }
+  primary_key {
+    columns = [column.id]
+  }
+}
+
+table "mentions" {
+  schema = schema.public
+  column "id" {
+    type = serial
+  }
+  column "paper_id" {
+    type = int
+    null = false
+  }
+  column "document" {
+    type = text
+    null = false
+  }
+  primary_key {
+    columns = [column.id]
   }
 
-  table "mentions" {
-    column "id" { type: int, primary_key: true }
-    column "paper_id" { type: int, references: table.papers.id }
-    column "document" { type: text }
+  foreign_key "mentions_paper_fk" {
+    columns = [column.paper_id]
+    ref_columns = [table.papers.column.id]
+    on_delete = "CASCADE"
   }
 }
 ```
 
 This schema defines:
-- A `papers` table with an id (primary key) and title.
-- A `mentions` table that references papers, linking a mention to a paper.
+- A `papers` table with an id (primary key) and title
+- A `mentions` table that references papers, linking a mention to a paper
+
+```console
+$ atlas schema apply -u "postgres://user:pass@db:5432/local_db?sslmode=disable" --file file://schema/schema.hcl --auto-approve
+Planning migration statements (2 in total):
+
+  -- create "papers" table:
+    -> CREATE TABLE "public"."papers" (
+         "id" serial NOT NULL,
+         "title" character varying(255) NOT NULL,
+         PRIMARY KEY ("id")
+       );
+  -- create "mentions" table:
+    -> CREATE TABLE "public"."mentions" (
+         "id" serial NOT NULL,
+         "paper_id" integer NOT NULL,
+         "document" text NOT NULL,
+         PRIMARY KEY ("id"),
+         CONSTRAINT "mentions_paper_fk" FOREIGN KEY ("paper_id") REFERENCES "public"."papers" ("id") ON DELETE CASCADE
+       );
+
+-------------------------------------------
+
+Applying approved migration (2 statements in total):
+
+  -- create "papers" table
+    -> CREATE TABLE "public"."papers" (
+         "id" serial NOT NULL,
+         "title" character varying(255) NOT NULL,
+         PRIMARY KEY ("id")
+       );
+  -- ok (24.597527ms)
+
+  -- create "mentions" table
+    -> CREATE TABLE "public"."mentions" (
+         "id" serial NOT NULL,
+         "paper_id" integer NOT NULL,
+         "document" text NOT NULL,
+         PRIMARY KEY ("id"),
+         CONSTRAINT "mentions_paper_fk" FOREIGN KEY ("paper_id") REFERENCES "public"."papers" ("id") ON DELETE CASCADE
+       );
+  -- ok (5.336047ms)
+
+  -------------------------
+  -- 10.896794ms
+  -- 1 migration
+  -- 2 sql statements
+```
 
 **Adding migrations:**
-
-TODO: add example output
 
 Once the schema is defined, making changes is straightforward.
 Here’s an example migration adding a new column to papers:
@@ -120,11 +190,13 @@ modifications structured and predictable.
 
 **Visualization:**
 
-Visualizing with ChartDB.io
-
 For database visualization, tools like ChartDB.io can generate schema diagrams,
 making it easier to understand relationships and structures.
-(TODO: Add visualization image example.)
+
+I still need to dive a bit more in the tool but we would end up using a
+single query with a pretty representation of our schema.
+
+![chartdb-view](./db-graph.png)
 
 In the next section, we’ll discuss best practices for user roles
 and access control in SQL databases.
@@ -184,12 +256,10 @@ This works especially well when pairing with application names passed via the Po
 `?application_name=` connection parameter. Tools like `pg_stat_activity` and `pg_stat_statements`
 can then help you trace queries back to their origin.
 
-> 🔗 **TODO**: Link to my article on using `?application_name` for tracking
-and dynamic RBAC automation.
+> 📝 I love relying on query parameters when working with Databases, especially for Tracking
+purpose as described in [Tracking Row Level changes in PostgreSQL][medium-tracking].
 
 ```sql
--- Run as the master user or a superuser role
-
 -- Create the migration user
 CREATE ROLE migration_user WITH
     LOGIN
@@ -227,11 +297,8 @@ CREATE ROLE analytics_user WITH
 GRANT CONNECT ON DATABASE your_database TO analytics_user;
 GRANT USAGE ON SCHEMA public TO analytics_user;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO analytics_user;
-```
 
-> 🛠 **Pro Tip**: To ensure future tables inherit the correct permissions, add `ALTER DEFAULT PRIVILEGES` statements:
-```sql
--- Future-proof privileges for app_user
+-- Set default privileges for app_user
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO app_user;
 
@@ -240,19 +307,23 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 GRANT SELECT ON TABLES TO analytics_user;
 ```
 
-This script ensures your roles are ready for day-to-day use, while
+This example script ensures your roles are ready for day-to-day use, while
 keeping privileges scoped and secure.
 
-NEXTARTICLE
+More complex setups could rely on more roles, have dedicated roles for
+users, leverage [row-level security][postgres-row-security] or even embrace cloud integration
+like the [IAM Database authentication][rds-iam].
 
+Let's now take a look at how we can automate the day 2 lifecycle of our database
+using a proper CICD workflow !
 
 ## Maintaining our database
 
-_You're here for the **run** part too._
+_You're here for the **run** part too!_
 
 Setting up a schema and applying best practices around roles
 is great but it’s not enough. Your database needs to **evolve** safely,
-**scale** affordably, and be **recoverable** in a pinch.
+**scale** affordably and be **recoverable** in a pinch.
 
 This section walks through real-world practices that help you stay production-ready.
 
@@ -271,19 +342,24 @@ A typical setup might look like:
 
 You can even use GitHub Actions to orchestrate the ECS task execution and lifecycle.
 
-TODO: see example definition in gh repo
+A complete example is available [on github **here**][db-bootstrapping-repo] with
+manifests, automations, ...
 
-#### Example: Wait for ECS Task to Finish
+![migration workflow](./db-migration.png)
 
-If using ECS, consider leveraging the AWS CLI "waiter" to monitor your task:
+**Nice to have: wait for ECS Task to finish:**
+
+If using ECS, consider leveraging the AWS CLI "waiter" sub commands to monitor
+your task:
 
 ```bash
-aws ecs wait tasks-stopped \
-  --cluster my-cluster \
-  --tasks <task-id>
+# wait for our created task to be in the stopped state
+$ aws ecs wait tasks-stopped --cluster my-cluster --tasks <task-id>
 ```
 
-> ⚠️ Heads-up: this can be expensive in GitHub Actions minutes—use it with caution or optimize with shorter polling and early exits.
+This can help in retrieving the migration status right in the Workflow run.
+
+> ⚠️ Heads-up: this can be expensive in GitHub Actions minutes: use it with caution or optimize with shorter polling and early exits.
 
 #### Good Practice
 
@@ -298,7 +374,8 @@ Databases often grow silently until one day your AWS bill screams louder than yo
 **Some human friendly cost-saving patterns**:
 
 - **Separate analytics from OLTP**: Don't let your app compete with long-running queries for dashboard refreshes
-- **Summarize over time**: Replace large granular datasets with summary tables. For example, keep hourly event logs for a month, but store daily rollups after that
+- **Summarize over time**: Replace large granular datasets with summary tables,
+i.e.: keep hourly event logs for a month, but store daily rollups after that
 - **Crunch data**: Convert high-volume event streams into metric tables like:
 
 ```sql
@@ -347,13 +424,25 @@ Feel free to reach out if you have feedbacks or questions !
 
 [linkedin]: https://linkedin.com/in/tbobm/
 
-[health-check-repo]: https://github.com/tbobm/complete-health-checks-design
+[db-bootstrapping-repo]: https://github.com/tbobm/bootstrapping-databases-for-local-and-prod
 
 [postgresql-home]: https://www.postgresql.org/
 
 [ecs]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html
 [alembic-gh]: https://github.com/sqlalchemy/alembic
+[alembic-sequeled]: https://github.com/tbobm/alembic-sequeled
 [atlas-gh]: https://github.com/ariga/atlas
-[atlas-main]: https://atlasgo.io/
+[atlas-home]: https://atlasgo.io/
+[atlas-inspect]: https://atlasgo.io/declarative/inspect
 [clickops-wiki]: https://en.wiktionary.org/wiki/ClickOps
 [hcl-gh]: https://github.com/hashicorp/hcl
+[gh-actions]: https://github.com/features/actions
+[medium-tracking]: https://medium.com/@tbobm/tracking-row-level-changes-in-postgresql-4455f91ab8d1
+[postgres-row-security]: https://www.postgresql.org/docs/current/ddl-rowsecurity.html
+[rds-iam]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
+
+
+[^1]: It's always postgres
+[^2]: many tools like [alembic][alembic-gh] which I loved so much in the past that I
+tried to work around the python-first migration declaration in [alembic-sequeled][alembic-sequeled]
+a few years back
