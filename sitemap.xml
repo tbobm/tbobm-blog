@@ -2,22 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://blog.tbobm.dev/posts/</loc>
+    <lastmod>2025-04-18T21:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/</loc>
+    <lastmod>2025-04-18T21:30:00+02:00</lastmod>
+  </url><url>
     <loc>https://blog.tbobm.dev/posts/complete-health-checks/</loc>
     <lastmod>2025-03-11T11:30:20+02:00</lastmod>
   </url><url>
     <loc>https://blog.tbobm.dev/tags/optimization/</loc>
     <lastmod>2025-03-11T11:30:20+02:00</lastmod>
   </url><url>
-    <loc>https://blog.tbobm.dev/posts/</loc>
-    <lastmod>2025-03-11T11:30:20+02:00</lastmod>
-  </url><url>
     <loc>https://blog.tbobm.dev/tags/reliability/</loc>
     <lastmod>2025-03-11T11:30:20+02:00</lastmod>
   </url><url>
     <loc>https://blog.tbobm.dev/tags/</loc>
-    <lastmod>2025-03-11T11:30:20+02:00</lastmod>
-  </url><url>
-    <loc>https://blog.tbobm.dev/</loc>
     <lastmod>2025-03-11T11:30:20+02:00</lastmod>
   </url><url>
     <loc>https://blog.tbobm.dev/tags/tech/</loc>
@@ -53,7 +53,5 @@
     <loc>https://blog.tbobm.dev/about/</loc>
   </url><url>
     <loc>https://blog.tbobm.dev/categories/</loc>
-  </url><url>
-    <loc>https://blog.tbobm.dev/now/</loc>
   </url>
 </urlset>
