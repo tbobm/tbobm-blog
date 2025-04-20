@@ -3,6 +3,7 @@ title = 'Bootstrapping SQL databases for local and production setup'
 date = 2025-04-18T21:30:00+02:00
 ShowToc = true
 tocopen = false
+draft = true
 tags = ['tech', 'database', 'rbac', 'postgres', 'migration']
 +++
 
