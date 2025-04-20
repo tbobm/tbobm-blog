@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Migration on tbobm.dev</title>
+    <link>https://blog.tbobm.dev/tags/migration/</link>
+    <description>Recent content in Migration on tbobm.dev</description>
+    <image>
+      <title>tbobm.dev</title>
+      <url>https://blog.tbobm.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://blog.tbobm.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.133.0</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 18 Apr 2025 21:30:00 +0200</lastBuildDate>
+    <atom:link href="https://blog.tbobm.dev/tags/migration/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bootstrapping SQL databases for local and production setup</title>
+      <link>https://blog.tbobm.dev/posts/db-bootstrapping/</link>
+      <pubDate>Fri, 18 Apr 2025 21:30:00 +0200</pubDate>
+      <guid>https://blog.tbobm.dev/posts/db-bootstrapping/</guid>
+      <description>A practical walkthrough of how I manage SQL databases across dev and prod - from local Docker setups to CI/CD-powered migrations in the cloud.
+Intro When working with databases, it’s easy to fall into the trap of taking shortcuts — a quick container here, a few clicks in the AWS console there, and before you know it, you&amp;rsquo;re running production off an unversioned schema with the master user.
+This article is a hands-on guide—and a collection of things I’ve grown to enjoy when working with SQL databases in modern environments.</description>
+    </item>
+  </channel>
+</rss>

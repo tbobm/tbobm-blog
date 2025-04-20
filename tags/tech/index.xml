@@ -11,8 +11,17 @@
     </image>
     <generator>Hugo -- 0.133.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 11 Mar 2025 11:30:20 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 18 Apr 2025 21:30:00 +0200</lastBuildDate>
     <atom:link href="https://blog.tbobm.dev/tags/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bootstrapping SQL databases for local and production setup</title>
+      <link>https://blog.tbobm.dev/posts/db-bootstrapping/</link>
+      <pubDate>Fri, 18 Apr 2025 21:30:00 +0200</pubDate>
+      <guid>https://blog.tbobm.dev/posts/db-bootstrapping/</guid>
+      <description>A practical walkthrough of how I manage SQL databases across dev and prod - from local Docker setups to CI/CD-powered migrations in the cloud.
+Intro When working with databases, it’s easy to fall into the trap of taking shortcuts — a quick container here, a few clicks in the AWS console there, and before you know it, you&amp;rsquo;re running production off an unversioned schema with the master user.
+This article is a hands-on guide—and a collection of things I’ve grown to enjoy when working with SQL databases in modern environments.</description>
+    </item>
     <item>
       <title>Complete health checks and why they matter</title>
       <link>https://blog.tbobm.dev/posts/complete-health-checks/</link>
