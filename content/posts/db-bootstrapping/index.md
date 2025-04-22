@@ -19,7 +19,7 @@ This article is a hands-on guide—and a collection of things I’ve grown to
 enjoy when working with SQL databases in modern environments. It covers
 setting up [Postgres][postgresql-home] [^1] both locally and in the cloud, adopting schema as
 code using [Atlas][atlas-home], securing access with proper roles, and maintaining
-everything through [GitHub Actions][gh-actions].
+everything through [Github Actions][gh-actions].
 
 The goal is to keep your database setup repeatable, reviewable, and resilient from day one.
 
@@ -61,7 +61,7 @@ By adopting a declarative approach, we gain:
 
 **Scalability**: the same process can be used across local, staging, and production environments.
 
-In the next section, we’ll get hands-on with [AtlasGO][atlas-main], defining an initial schema
+In the next section, we’ll get hands-on with [AtlasGO][atlas-home], defining an initial schema
 and managing database migrations efficiently.
 
 ### Embrace schema as code
@@ -190,7 +190,7 @@ modifications structured and predictable.
 
 **Visualization:**
 
-For database visualization, tools like ChartDB.io can generate schema diagrams,
+For database visualization, tools like [ChartDB.io][chart-io] can generate schema diagrams,
 making it easier to understand relationships and structures.
 
 I still need to dive a bit more in the tool but we would end up using a
@@ -205,8 +205,8 @@ and access control in SQL databases.
 
 _RBAC: Creating standard roles and users_
 
-One of the most overlooked yet impactful improvements you can make to your
-database setup is role separation. In local development, you might get away
+One overlooked yet impactful improvements you can make to your
+database setup is [role separation][wiki-rbac]. In local development, you might get away
 with using the `postgres` or `admin` user. But in production? That’s a ticking time bomb.
 
 Role-based access control (RBAC) ensures that each piece of your stack interacts with
@@ -241,7 +241,7 @@ Here’s a standard setup that works well in most projects:
 | `analytics_user` | `SELECT` only                          | Read-only access for BI tools, analysts, etc. |
 
 Only **one migration user per environment** should exist, and its usage should be limited to
-your CI/CD pipelines (e.g., GitHub Actions, GitLab CI, etc.).
+your CI/CD pipelines (e.g., Github Actions, Gitlab CI, etc.).
 
 ### A step beyond: match applications with roles
 
@@ -327,7 +327,7 @@ is great but it’s not enough. Your database needs to **evolve** safely,
 
 This section walks through real-world practices that help you stay production-ready.
 
-### CI/CD Deployment with GitHub Actions
+### CI/CD Deployment with Github Actions
 
 Whether your database is public-facing or running inside a private subnet
 (like AWS RDS in a VPC), schema changes should be handled like any
@@ -340,7 +340,7 @@ A typical setup might look like:
 3. **Trigger a one-off ECS task** to run the migration
 4. **Wait for success or rollback** automatically if something fails
 
-You can even use GitHub Actions to orchestrate the ECS task execution and lifecycle.
+You can even use Github Actions to orchestrate the ECS task execution and lifecycle.
 
 A complete example is available [on github **here**][db-bootstrapping-repo] with
 manifests, automations, ...
@@ -349,7 +349,7 @@ manifests, automations, ...
 
 **Nice to have: wait for ECS Task to finish:**
 
-If using [ECS][ecs], consider leveraging the AWS CLI "waiter" sub commands to monitor
+If using [ECS][ecs], consider leveraging the AWS CLI ["waiter"][aws-waiter] sub commands to monitor
 your task:
 
 ```bash
@@ -359,12 +359,12 @@ $ aws ecs wait tasks-stopped --cluster my-cluster --tasks <task-id>
 
 This can help in retrieving the migration status right in the Workflow run.
 
-> ⚠️ Heads-up: this can be expensive in GitHub Actions minutes: use it with caution or optimize with shorter polling and early exits.
+> ⚠️ Heads-up: this can be expensive in Github Actions minutes: use it with caution or optimize with shorter polling and early exits.
 
 #### Good Practice
 
 - Migrations should be applied by the `migration_user` created earlier.
-- Use GitHub Actions triggers on `main` or `release` branches.
+- Use Github Actions triggers on `main` or `release` branches.
 - Add a **manual rollback** mechanism using `workflow_dispatch` to enable safe rollbacks without reverting code.
 
 ### Keeping it lean: reducing the bill
@@ -418,7 +418,7 @@ operational resilience. Whether you're spinning up a new service locally,
 managing production-grade RDS instances or fine-tuning query access for analytics,
 these practices help you move fast without breaking your data.
 
-Feel free to reach out if you have feedbacks or questions !
+Feel free to reach out if you have feedback or questions !
 
 [Theo "Bob" Massard][linkedin]
 
@@ -431,6 +431,7 @@ Feel free to reach out if you have feedbacks or questions !
 [ecs]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html
 [alembic-gh]: https://github.com/sqlalchemy/alembic
 [alembic-sequeled]: https://github.com/tbobm/alembic-sequeled
+[aws-waiter]: https://github.com/aws/aws-cli/blob/develop/awscli/customizations/waiters.py
 [atlas-gh]: https://github.com/ariga/atlas
 [atlas-home]: https://atlasgo.io/
 [atlas-inspect]: https://atlasgo.io/declarative/inspect
@@ -440,6 +441,8 @@ Feel free to reach out if you have feedbacks or questions !
 [medium-tracking]: https://medium.com/@tbobm/tracking-row-level-changes-in-postgresql-4455f91ab8d1
 [postgres-row-security]: https://www.postgresql.org/docs/current/ddl-rowsecurity.html
 [rds-iam]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
+[chart-io]: https://chartdb.io/
+[wiki-rbac]: https://en.wikipedia.org/wiki/Role-based_access_control
 
 
 [^1]: It's always postgres
