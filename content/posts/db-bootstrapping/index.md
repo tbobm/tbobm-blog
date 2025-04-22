@@ -7,15 +7,15 @@ tags = ['tech', 'database', 'rbac', 'postgres', 'migration']
 +++
 
 A practical walkthrough of how I manage SQL databases across dev and
-prod - from local Docker setups to CI/CD-powered migrations in the cloud.
+prod - from local container setups to CI/CD-powered migrations in the cloud.
 
 ## Intro
 
-When working with databases, it’s easy to fall into the trap of taking shortcuts — a
+When working with databases, it’s easy to fall into the trap of taking shortcuts - a
 quick container here, a few clicks in the AWS console there, and before
 you know it, you're running production off an unversioned schema with the master user.
 
-This article is a hands-on guide—and a collection of things I’ve grown to
+This article is a hands-on guide and a collection of things I’ve grown to
 enjoy when working with SQL databases in modern environments. It covers
 setting up [Postgres][postgresql-home] [^1] both locally and in the cloud, adopting schema as
 code using [Atlas][atlas-home], securing access with proper roles, and maintaining
@@ -327,6 +327,41 @@ is great but it’s not enough. Your database needs to **evolve** safely,
 
 This section walks through real-world practices that help you stay production-ready.
 
+**Infra as code:**
+
+We can assume a terraform-based setup of an RDS instance using the
+official [AWS Terraform Module][terraform-rds-gh]:
+
+```hcl
+module "db" {
+  source = "terraform-aws-modules/rds-aurora/aws"
+
+  name = "db-processing"
+
+  engine         = "postgres"
+  engine_mode    = "provisioned"
+  engine_version = "16.1"
+
+  storage_encrypted = true
+  master_username   = "sysadmin"
+  database_name     = "processing"
+
+  serverlessv2_scaling_configuration = {
+    min_capacity = 1
+    max_capacity = 5
+  }
+
+  instance_class = "db.serverless"
+  instances = {
+    one = {}
+  }
+}
+```
+
+This RDS instance should be considered private (not exposed to the Internet) and
+only reachable from within a given VPC.
+
+
 ### CI/CD Deployment with Github Actions
 
 Whether your database is public-facing or running inside a private subnet
@@ -449,3 +484,6 @@ Feel free to reach out if you have feedback or questions !
 [^2]: many tools like [alembic][alembic-gh] which I loved so much in the past that I
 tried to work around the python-first migration declaration in [alembic-sequeled][alembic-sequeled]
 a few years back
+
+[terraform-rds-reg]: https://registry.terraform.io/modules/terraform-aws-modules/rds/aws/latest
+[terraform-rds-gh]: https://github.com/terraform-aws-modules/terraform-aws-rds
