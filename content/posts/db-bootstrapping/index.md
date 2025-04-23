@@ -9,6 +9,8 @@ tags = ['tech', 'database', 'rbac', 'postgres', 'migration']
 A practical walkthrough of how I manage SQL databases across dev and
 prod - from local container setups to CI/CD-powered migrations in the cloud.
 
+_Code and examples are available here: [bootstrapping-databases][db-bootstrapping-repo]_
+
 ## Intro
 
 When working with databases, it’s easy to fall into the trap of taking shortcuts - a
@@ -459,7 +461,7 @@ Feel free to reach out if you have feedback or questions !
 
 [linkedin]: https://linkedin.com/in/tbobm/
 
-[db-bootstrapping-repo]: https://github.com/tbobm/bootstrapping-databases-for-local-and-prod
+[db-bootstrapping-repo]: https://github.com/tbobm/bootstrapping-databases
 
 [postgresql-home]: https://www.postgresql.org/
 
