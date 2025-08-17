@@ -247,6 +247,8 @@ Multi-stage builds are one of those Docker features that feel like a cheat code:
 
 Combine it with tools like `distroless` or Lambda RIE, and you get both security and convenience.
 
+You can check out the corresponding example repository here: [multistage-container-images-example][gh-repo]
+
 Feel free to reach out if you have feedback or questions!
 
 [Theo "Bob" Massard][linkedin]
@@ -257,3 +259,4 @@ Feel free to reach out if you have feedback or questions!
 [gh-lambda-rie]: https://github.com/aws/aws-lambda-runtime-interface-emulator
 [gh-localstack]: https://github.com/localstack/localstack
 [gh-bazel-distroless]: https://github.com/GoogleContainerTools/rules_distroless/tree/main
+[gh-repo]: https://github.com/tbobm/multistage-container-images-example
