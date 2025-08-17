@@ -11,8 +11,43 @@
     </image>
     <generator>Hugo -- 0.133.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 18 Apr 2025 21:30:00 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 16 Aug 2025 15:20:00 +0200</lastBuildDate>
     <atom:link href="https://blog.tbobm.dev/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Containers</title>
+      <link>https://blog.tbobm.dev/tags/containers/</link>
+      <pubDate>Sat, 16 Aug 2025 15:20:00 +0200</pubDate>
+      <guid>https://blog.tbobm.dev/tags/containers/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go</title>
+      <link>https://blog.tbobm.dev/tags/go/</link>
+      <pubDate>Sat, 16 Aug 2025 15:20:00 +0200</pubDate>
+      <guid>https://blog.tbobm.dev/tags/go/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Short</title>
+      <link>https://blog.tbobm.dev/tags/short/</link>
+      <pubDate>Sat, 16 Aug 2025 15:20:00 +0200</pubDate>
+      <guid>https://blog.tbobm.dev/tags/short/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tech</title>
+      <link>https://blog.tbobm.dev/tags/tech/</link>
+      <pubDate>Sat, 16 Aug 2025 15:20:00 +0200</pubDate>
+      <guid>https://blog.tbobm.dev/tags/tech/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tips</title>
+      <link>https://blog.tbobm.dev/tags/tips/</link>
+      <pubDate>Sat, 16 Aug 2025 15:20:00 +0200</pubDate>
+      <guid>https://blog.tbobm.dev/tags/tips/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Database</title>
       <link>https://blog.tbobm.dev/tags/database/</link>
@@ -42,13 +77,6 @@
       <description></description>
     </item>
     <item>
-      <title>Tech</title>
-      <link>https://blog.tbobm.dev/tags/tech/</link>
-      <pubDate>Fri, 18 Apr 2025 21:30:00 +0200</pubDate>
-      <guid>https://blog.tbobm.dev/tags/tech/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Optimization</title>
       <link>https://blog.tbobm.dev/tags/optimization/</link>
       <pubDate>Tue, 11 Mar 2025 11:30:20 +0200</pubDate>
@@ -60,13 +88,6 @@
       <link>https://blog.tbobm.dev/tags/reliability/</link>
       <pubDate>Tue, 11 Mar 2025 11:30:20 +0200</pubDate>
       <guid>https://blog.tbobm.dev/tags/reliability/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Go</title>
-      <link>https://blog.tbobm.dev/tags/go/</link>
-      <pubDate>Wed, 13 Nov 2024 13:35:00 +0200</pubDate>
-      <guid>https://blog.tbobm.dev/tags/go/</guid>
       <description></description>
     </item>
     <item>

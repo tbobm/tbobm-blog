@@ -11,8 +11,18 @@
     </image>
     <generator>Hugo -- 0.133.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 18 Apr 2025 21:30:00 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 16 Aug 2025 15:20:00 +0200</lastBuildDate>
     <atom:link href="https://blog.tbobm.dev/tags/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Multi-stage container images from dev to production</title>
+      <link>https://blog.tbobm.dev/posts/multistage-container-images-lambda/</link>
+      <pubDate>Sat, 16 Aug 2025 15:20:00 +0200</pubDate>
+      <guid>https://blog.tbobm.dev/posts/multistage-container-images-lambda/</guid>
+      <description>Multi-stage container images have been a good friend of mine for some time now. They enable projects to package smarter by splitting the build and run phases of a given software.
+Intro to multi-stage Let&amp;rsquo;s start with a simple hello world program in Go!
+Here is a minimal working example that will be used for our next builds:
+package main import &amp;#34;fmt&amp;#34; func main() { fmt.Println(&amp;#34;Hello from Lambda! :)&amp;#34;) } And our initial, easy to use, Dockerfile will look like this:</description>
+    </item>
     <item>
       <title>Bootstrapping SQL databases for local and production setup</title>
       <link>https://blog.tbobm.dev/posts/db-bootstrapping/</link>

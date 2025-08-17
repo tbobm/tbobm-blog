@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Go on tbobm.dev</title>
-    <link>https://blog.tbobm.dev/tags/go/</link>
-    <description>Recent content in Go on tbobm.dev</description>
+    <title>Containers on tbobm.dev</title>
+    <link>https://blog.tbobm.dev/tags/containers/</link>
+    <description>Recent content in Containers on tbobm.dev</description>
     <image>
       <title>tbobm.dev</title>
       <url>https://blog.tbobm.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.133.0</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 16 Aug 2025 15:20:00 +0200</lastBuildDate>
-    <atom:link href="https://blog.tbobm.dev/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.tbobm.dev/tags/containers/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Multi-stage container images from dev to production</title>
       <link>https://blog.tbobm.dev/posts/multistage-container-images-lambda/</link>
@@ -22,16 +22,6 @@
 Intro to multi-stage Let&amp;rsquo;s start with a simple hello world program in Go!
 Here is a minimal working example that will be used for our next builds:
 package main import &amp;#34;fmt&amp;#34; func main() { fmt.Println(&amp;#34;Hello from Lambda! :)&amp;#34;) } And our initial, easy to use, Dockerfile will look like this:</description>
-    </item>
-    <item>
-      <title>Watermarking pictures (fast) using Pillow and Libvips</title>
-      <link>https://blog.tbobm.dev/posts/watermarking-pictures-fast/</link>
-      <pubDate>Wed, 13 Nov 2024 13:35:00 +0200</pubDate>
-      <guid>https://blog.tbobm.dev/posts/watermarking-pictures-fast/</guid>
-      <description>Working in the media processing industry, I very often encounter 2 concepts: adding overlay to images and doing it fast.
-As I&amp;rsquo;m very much interested in tackling this problem well enough and using proper tooling for performance efficiency, I explored several options that allow watermarking pictures.
-Code is available at github.com/tbobm/watermarking-images-for-fun-and-profit
-Watermarking pictures To put things back in context, watermarking is the act of applying an overlay to a media. This can be performed through many different operation and is used to apply branding, establish ownership, or limit usage to a specific audience 1.</description>
     </item>
   </channel>
 </rss>

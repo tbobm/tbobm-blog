@@ -2,6 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://blog.tbobm.dev/tags/containers/</loc>
+    <lastmod>2025-08-16T15:20:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/go/</loc>
+    <lastmod>2025-08-16T15:20:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/posts/multistage-container-images-lambda/</loc>
+    <lastmod>2025-08-16T15:20:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/posts/</loc>
+    <lastmod>2025-08-16T15:20:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/short/</loc>
+    <lastmod>2025-08-16T15:20:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/</loc>
+    <lastmod>2025-08-16T15:20:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/</loc>
+    <lastmod>2025-08-16T15:20:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/tech/</loc>
+    <lastmod>2025-08-16T15:20:00+02:00</lastmod>
+  </url><url>
+    <loc>https://blog.tbobm.dev/tags/tips/</loc>
+    <lastmod>2025-08-16T15:20:00+02:00</lastmod>
+  </url><url>
     <loc>https://blog.tbobm.dev/posts/db-bootstrapping/</loc>
     <lastmod>2025-04-18T21:30:00+02:00</lastmod>
   </url><url>
@@ -14,19 +41,7 @@
     <loc>https://blog.tbobm.dev/tags/postgres/</loc>
     <lastmod>2025-04-18T21:30:00+02:00</lastmod>
   </url><url>
-    <loc>https://blog.tbobm.dev/posts/</loc>
-    <lastmod>2025-04-18T21:30:00+02:00</lastmod>
-  </url><url>
     <loc>https://blog.tbobm.dev/tags/rbac/</loc>
-    <lastmod>2025-04-18T21:30:00+02:00</lastmod>
-  </url><url>
-    <loc>https://blog.tbobm.dev/tags/</loc>
-    <lastmod>2025-04-18T21:30:00+02:00</lastmod>
-  </url><url>
-    <loc>https://blog.tbobm.dev/</loc>
-    <lastmod>2025-04-18T21:30:00+02:00</lastmod>
-  </url><url>
-    <loc>https://blog.tbobm.dev/tags/tech/</loc>
     <lastmod>2025-04-18T21:30:00+02:00</lastmod>
   </url><url>
     <loc>https://blog.tbobm.dev/posts/complete-health-checks/</loc>
@@ -37,9 +52,6 @@
   </url><url>
     <loc>https://blog.tbobm.dev/tags/reliability/</loc>
     <lastmod>2025-03-11T11:30:20+02:00</lastmod>
-  </url><url>
-    <loc>https://blog.tbobm.dev/tags/go/</loc>
-    <lastmod>2024-11-13T13:35:00+02:00</lastmod>
   </url><url>
     <loc>https://blog.tbobm.dev/tags/media-processing/</loc>
     <lastmod>2024-11-13T13:35:00+02:00</lastmod>
