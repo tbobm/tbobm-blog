@@ -53,13 +53,13 @@ use multi-stage to get **lean production images**.
 
 Tools like `uv` now offer fine-grained, cache-enabled build workflows, making this pattern even more attractive.
 
-THey have an excellent documentation on that on [Using uv in Docker][uv-docker]
+They have an excellent documentation on that on [Using uv in Docker][uv-docker].
 
 ### Simple multi-stage example
 
 Let’s leverage [scratch images][docker-scratch] for the smallest possible image.
 Using our initial container image, we will build the go executable, then copy it
-into a scratch image which does not include any file system.
+into a scratch image which does not include any filesystem.
 
 ```Dockerfile
 FROM golang:1.24 AS builder
@@ -83,9 +83,12 @@ stage by using the [`COPY --from=<stage>`][docker-copyfrom] directive.
 
 The final resulting image is made of only our executable in an empty base image.
 Now the final image is only **2.21 MB**.
-Hard to beat without more complex build system tricks.
+Hard to beat without more complex build system configuration.
 
-**However, scratch images are often impractical in production**: no shell, no package manager, no libraries.
+**However, scratch images may be hard to use in production**: no shell, no package manager, no libraries.
+
+We can work around that using side-car containers if our orchestration engine allows it but if we
+want to stick to a independant container image, we can use a more flexible base image.
 
 ### Using distroless images
 
@@ -128,7 +131,7 @@ or want to extend the capabilities included in th end result image.
 | **Two-stage (distroless)** | `gcr.io/distroless/static-debian12` | \~8–10 MB    | Minimal OS libs included, better prod support |
 
 > Sizes will vary depending on your binary and build flags.
-> Scratch is the smallest but lacks any runtime conveniences, while distroless offers a good security–functionality balance.
+> Scratch is the smallest but lacks runtime tooling, while distroless offers a good security-functionality balance.
 
 ## Going further - AWS Lambda support
 
@@ -231,7 +234,7 @@ $ docker build -t lambda:default .  # now "release" based on production
 
 This will exclude the Lambda RIE addition from our container image
 but we still have **local dev support** through the `dev` target,
-ensuring parity. Our Dockerfile coversw both dev and production
+ensuring parity. Our Dockerfile covers both **dev** and **production**.
 
 ### Local invocation example with RIE
 
@@ -261,16 +264,14 @@ Expected output:
 {"statusCode":200,"body":"Hello from Lambda :)"}
 ```
 
-
 ## Conclusion
 
 Multi-stage builds are one of those container building features that are often overlooked at the early stages of a project.
 
 However, multi-stage is easy to implement and it enables:
-* Lighter images
-* Cleaner CI/CD pipelines
-* Local dev and production parity
-
+* **Lighter images**, improving cost and performances
+* **Cleaner CI/CD pipelines**, with a flexible single image
+* **Local dev and production parity**, as we only maintain a single Dockerfile
 
 Below is a small diagram to represent the different stages of our container image
 and how they interact with each other.
